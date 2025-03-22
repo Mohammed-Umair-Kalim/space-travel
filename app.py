@@ -32,15 +32,24 @@ menu_choice = st.sidebar.radio(
 # Book a Trip
 if menu_choice == "Book a Trip":
     st.header("Book Your Space Trip")
+
+    # Destination Selection
     destination = st.selectbox("Choose your destination:", list(destinations.keys()))
 
-    seat_class = st.selectbox(
-        "Choose your seat class:", list(destinations[destination].keys())
-    )
-    price = destinations[destination][seat_class]
+    # Display Pricing Options
+    st.subheader("Pricing Options")
+    seat_classes = destinations[destination]
+    for seat_class, price in seat_classes.items():
+        st.write(f"- **{seat_class.capitalize()}**: ${price}")
 
+    # Seat Class Selection
+    seat_class = st.selectbox("Choose your seat class:", list(seat_classes.keys()))
+    price = seat_classes[seat_class]
+
+    # Departure Date Selection
     departure_date = st.date_input("Select your departure date:", min_value=datetime.date.today())
 
+    # Confirm Booking
     if st.button("Confirm Booking"):
         booking = {
             "destination": destination,
